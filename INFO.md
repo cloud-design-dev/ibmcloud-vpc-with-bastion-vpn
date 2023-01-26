@@ -1,6 +1,17 @@
-# ibmcloud-mzr-lab
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
-Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host.
+| Name | Version |
+|------|---------|
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.50.0-beta0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_external"></a> [external](#provider\_external) | 2.2.3 |
+| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | 1.50.0-beta0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
 
 ## Modules
 
