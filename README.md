@@ -32,8 +32,8 @@ Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_public_gateway_ids"></a> [public\_gateway\_ids](#output\_public\_gateway\_ids) | n/a |
-| <a name="output_region"></a> [region](#output\_region) | n/a |
-| <a name="output_subnet_ids"></a> [subnet\_ids](#output\_subnet\_ids) | n/a |
-| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | n/a |
+| <a name="output_frontend_subnet_ids"></a> [frontend\_subnet\_ids](#output\_frontend\_subnet\_ids) | The IDs of the frontend subnets. |
+| <a name="output_public_gateway_ids"></a> [public\_gateway\_ids](#output\_public\_gateway\_ids) | The IDs of the public gateways. |
+| <a name="output_region"></a> [region](#output\_region) | IBM Cloud Region where resources are deployed. |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The ID of the VPC. |
 <!-- END_TF_DOCS -->

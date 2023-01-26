@@ -1,15 +1,19 @@
 output "vpc_id" {
-  value = module.vpc.vpc_id[0]
+  description = "The ID of the VPC."
+  value       = module.vpc.vpc_id[0]
 }
 
 output "region" {
-  value = local.region
+  description = "IBM Cloud Region where resources are deployed."
+  value       = local.region
 }
 
-output "subnet_ids" {
-  value = module.vpc.subnet_ids
+output "frontend_subnet_ids" {
+  description = "The IDs of the frontend subnets."
+  value       = module.vpc.subnet_ids
 }
 
 output "public_gateway_ids" {
-  value = module.vpc.public_gateway_ids
+  description = "The IDs of the public gateways."
+  value       = module.vpc.public_gateway_ids
 }
