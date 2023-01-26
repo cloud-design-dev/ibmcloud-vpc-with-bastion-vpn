@@ -2,14 +2,14 @@
 
 Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host. This is a work in progress and currently creates:
 
- - :white_check_mark: VPC
- - :white_check_mark: Public Gateways for frontend subnets
- - :white_check_mark: Frontend subnets 
- - :white_check_mark:Frontend Security Group ["http", "https", "ssh", "vpn"]
- - :white_check_mark: Cloud Object Storage instance for flowlogs
- - :white_check_mark: IAM Authorization policy so that Flowlogs can write to the COS instance.
- - :white_check_mark: Per subnet, smart-tier COS bucket  
- - :white_check_mark: Per subnet Flowlogs collector
+ - :white_check_mark:  VPC
+ - :white_check_mark:  Public Gateways for frontend subnets
+ - :white_check_mark:  Frontend subnets 
+ - :white_check_mark:  Frontend Security Group ["http", "https", "ssh", "vpn"]
+ - :white_check_mark:  Cloud Object Storage instance for flowlogs
+ - :white_check_mark:  IAM Authorization policy so that Flowlogs can write to the COS instance.
+ - :white_check_mark:  Per subnet, smart-tier COS bucket  
+ - :white_check_mark:  Per subnet Flowlogs collector
  - :x: Observability instances with ability to use existing
  - :x: VPN server with Wireguard
  - :x: Bastion Server
