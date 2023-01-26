@@ -11,8 +11,8 @@ resource "random_string" "prefix" {
 }
 
 module "vpc" {
-  source = "terraform-ibm-modules/vpc/ibm//modules/vpc"
-
+  source                      = "terraform-ibm-modules/vpc/ibm//modules/vpc"
+  version                     = "1.1.1"
   create_vpc                  = true
   vpc_name                    = "${local.prefix}-vpc"
   resource_group_id           = data.ibm_resource_group.resource_group.id
@@ -32,8 +32,8 @@ module "vpc" {
 
 
 module "security_group" {
-  source = "terraform-ibm-modules/vpc/ibm//modules/security-group"
-
+  source                = "terraform-ibm-modules/vpc/ibm//modules/security-group"
+  version               = "1.1.1"
   create_security_group = true
   name                  = "${local.prefix}-frontend-sg"
   vpc_id                = module.vpc.vpc_id[0]
