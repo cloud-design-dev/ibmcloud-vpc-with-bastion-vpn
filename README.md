@@ -1,6 +1,18 @@
 # ibmcloud-mzr-lab
 
-Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host.
+Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host. This is a work in progress and currently creates:
+
+ - :white_check_mark: VPC
+ - :white_check_mark: Public Gateways for frontend subnets
+ - :white_check_mark: Frontend subnets 
+ - :white_check_mark:Frontend Security Group ["http", "https", "ssh", "vpn"]
+ - :white_check_mark: Cloud Object Storage instance for flowlogs
+ - :white_check_mark: IAM Authorization policy so that Flowlogs can write to the COS instance.
+ - :white_check_mark: Per subnet, smart-tier COS bucket  
+ - :white_check_mark: Per subnet Flowlogs collector
+ - :x: Observability instances with ability to use existing
+ - :x: VPN server with Wireguard
+ - :x: Bastion Server
 
 ## Providers
 
@@ -21,6 +33,10 @@ Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host.
 
 | Name | Type |
 |------|------|
+| [ibm_cos_bucket.frontend_flowlogs](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.50.0-beta0/docs/resources/cos_bucket) | resource |
+| [ibm_iam_authorization_policy.cos_flowlogs](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.50.0-beta0/docs/resources/iam_authorization_policy) | resource |
+| [ibm_is_flow_log.frontend](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.50.0-beta0/docs/resources/is_flow_log) | resource |
+| [ibm_resource_instance.cos](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.50.0-beta0/docs/resources/resource_instance) | resource |
 | [random_shuffle.region](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/shuffle) | resource |
 | [random_string.prefix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [external_external.env](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) | data source |
