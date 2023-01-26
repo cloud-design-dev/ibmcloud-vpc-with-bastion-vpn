@@ -2,12 +2,20 @@
 
 Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host.
 
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_external"></a> [external](#provider\_external) | 2.2.3 |
+| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | 1.50.0-beta0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
+
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-ibm-modules/vpc/ibm//modules/security-group | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-ibm-modules/vpc/ibm//modules/vpc | n/a |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | terraform-ibm-modules/vpc/ibm//modules/security-group | 1.1.1 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-ibm-modules/vpc/ibm//modules/vpc | 1.1.1 |
 
 ## Resources
 
