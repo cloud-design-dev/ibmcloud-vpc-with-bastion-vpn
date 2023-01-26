@@ -6,7 +6,7 @@ Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host. This i
  - :white_check_mark:  Public Gateway per zone for Frontend subnets
  - :white_check_mark:  Frontend subnet per zone 
  - :white_check_mark:  Frontend Security Group for SSH, Web, and VPN
-    - Inbound: `80/tcp`, `443/tcp`, `22/tcp`, `51280/udp`]
+    - Inbound: `80/tcp`, `443/tcp`, `22/tcp`, `51280/udp`
     - Outbound: `all`
  - :white_check_mark:  Cloud Object Storage instance for flowlogs
  - :white_check_mark:  IAM Authorization policy so that Flowlogs can write to the COS instance.
