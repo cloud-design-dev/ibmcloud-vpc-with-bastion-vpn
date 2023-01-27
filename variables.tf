@@ -1,5 +1,5 @@
-variable "resource_group" {
-  description = "Resource group to use for all deployed resources. If not specified the 'default' resource group will be used."
+variable "existing_resource_group" {
+  description = "Resource group to use for all deployed resources. If not specified, a new one will be created."
   type        = string
 }
 
@@ -16,6 +16,12 @@ variable "owner" {
 variable "region" {
   description = "IBM Cloud Region where resources will be deployed. If not specified, one will be randomly selected. To see available regions, run 'ibmcloud is regions'."
   type        = string
+}
+
+variable "existing_cos_instance" {
+  description = "The name of an existing COS instance to use. If not specified, a new instance will be created."
+  type        = string
+  default     = ""
 }
 
 variable "frontend_rules" {

@@ -17,3 +17,12 @@ output "public_gateway_ids" {
   description = "The IDs of the public gateways."
   value       = module.vpc.public_gateway_ids
 }
+
+output "cos_instance_guid" {
+  description = "The details of the COS instance."
+  value       = local.cos_guid
+}
+
+output "cos_bucket_names" {
+  value = flatten(module.fowlogs_cos_bucket.*.bucket_name)
+}
