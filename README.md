@@ -59,10 +59,10 @@ Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host. This i
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cos_bucket_names"></a> [cos\_bucket\_names](#output\_cos\_bucket\_names) | n/a |
-| <a name="output_cos_instance_guid"></a> [cos\_instance\_guid](#output\_cos\_instance\_guid) | The details of the COS instance. |
+| <a name="output_cos_bucket_names"></a> [cos\_bucket\_names](#output\_cos\_bucket\_names) | Flowlog bucket names |
+| <a name="output_cos_instance_guid"></a> [cos\_instance\_guid](#output\_cos\_instance\_guid) | GUID of the COS instance. Needed for IAM Authorization policy |
 | <a name="output_frontend_subnet_ids"></a> [frontend\_subnet\_ids](#output\_frontend\_subnet\_ids) | The IDs of the frontend subnets. |
 | <a name="output_public_gateway_ids"></a> [public\_gateway\_ids](#output\_public\_gateway\_ids) | The IDs of the public gateways. |
 | <a name="output_region"></a> [region](#output\_region) | IBM Cloud Region where resources are deployed. |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The ID of the VPC. |
-<!-- END_TF_DOCS -->%  
+<!-- END_TF_DOCS -->
