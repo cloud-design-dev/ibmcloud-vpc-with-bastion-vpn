@@ -16,6 +16,29 @@ resource "random_string" "prefix" {
   upper   = false
 }
 
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "ibm_is_ssh_key" "generated_key" {
+  count          = var.existing_ssh_key != "" ? 0 : 1
+  name           = "${local.prefix}-${local.region}-key"
+  public_key     = tls_private_key.ssh.public_key_openssh
+  resource_group = module.resource_group.resource_group_id
+  tags           = local.tags
+}
+
+resource "null_resource" "create_private_key" {
+  count = var.existing_ssh_key != "" ? 0 : 1
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo '${tls_private_key.ssh.private_key_pem}' > ./'${local.prefix}'.pem
+      chmod 400 ./'${local.prefix}'.pem
+    EOT
+  }
+}
+
 module "vpc" {
   source                      = "terraform-ibm-modules/vpc/ibm//modules/vpc"
   version                     = "1.1.1"
@@ -47,17 +70,21 @@ module "security_group" {
   security_group_rules  = local.frontend_rules
 }
 
-# module "logging" {
-#   source                     = "git::https://github.com/terraform-ibm-modules/terraform-ibm-observability-instances?ref=main"
-#   enable_platform_logs       = false
-#   sysdig_provision           = false
-#   activity_tracker_provision = false
-#   region                     = local.region
-#   resource_group_id          = data.ibm_resource_group.resource_group.id
-#   logdna_instance_name = "${local.prefix}-logging-instance"
-#   logdna_tags          = local.tags
-#   logdna_plan          = "7-day"
-# }
+module "logging" {
+  source = "git::https://github.com/terraform-ibm-modules/terraform-ibm-observability-instances?ref=main"
+  providers = {
+    logdna.at = logdna.at
+    logdna.ld = logdna.ld
+  }
+  enable_platform_logs       = false
+  sysdig_provision           = false
+  activity_tracker_provision = false
+  region                     = local.region
+  resource_group_id          = module.resource_group.resource_group_id
+  logdna_instance_name       = "${local.prefix}-logging-instance"
+  logdna_tags                = local.tags
+  logdna_plan                = "7-day"
+}
 
 module "cos" {
   count                    = var.existing_cos_instance != "" ? 0 : 1
@@ -103,4 +130,35 @@ resource "ibm_is_flow_log" "frontend" {
   target         = module.vpc.subnet_ids[count.index]
   active         = true
   storage_bucket = module.fowlogs_cos_bucket[count.index].bucket_name[0]
+}
+
+resource "ibm_is_instance" "bastion" {
+  name                     = "${local.prefix}-bastion"
+  vpc                      = module.vpc.vpc_id[0]
+  image                    = data.ibm_is_image.base.id
+  profile                  = var.instance_profile
+  resource_group           = module.resource_group.resource_group_id
+  metadata_service_enabled = var.metadata_service_enabled
+
+  boot_volume {
+    name = "${local.prefix}-boot-volume"
+  }
+
+  primary_network_interface {
+    subnet            = module.vpc.subnet_ids[0]
+    allow_ip_spoofing = var.allow_ip_spoofing
+    security_groups   = [module.security_group.security_group_id[0]]
+  }
+
+  user_data = templatefile("${path.module}/init.tftpl", { logdna_ingestion_key = module.logging.logdna_ingestion_key, region = local.region, vpc_tag = "vpc:${local.prefix}-vpc" })
+  zone      = local.vpc_zones[0].zone
+  keys      = local.ssh_key_ids
+  tags      = concat(local.tags, ["zone:${local.vpc_zones[0].zone}"])
+}
+
+resource "ibm_is_floating_ip" "bastion" {
+  name           = "${local.prefix}-bastion-public-ip"
+  resource_group = module.resource_group.resource_group_id
+  target         = ibm_is_instance.bastion.primary_network_interface[0].id
+  tags           = concat(local.tags, ["zone:${local.vpc_zones[0].zone}"])
 }
