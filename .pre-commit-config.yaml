@@ -14,7 +14,7 @@ repos:
         - --args=--hide=requirements
         - --args=--hide=providers
         - --args=--output-mode=inject
-        - --hook-config=--path-to-file=README.md        # Valid UNIX path. I.e. ../TFDOC.md or docs/README.md etc.
+        - --hook-config=--path-to-file=README.md
         - --hook-config=--add-to-existing-file=true    
 - repo: https://github.com/Yelp/detect-secrets
   rev: v1.4.0

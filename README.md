@@ -12,9 +12,9 @@ Terraform code to deploy an IBM Cloud MZR VPC with a VPN or Bastion host. This i
  - :white_check_mark:  IAM Authorization policy so that Flowlogs can write to the COS instance.
  - :white_check_mark:  COS bucket for each Frontend subnet  
  - :white_check_mark:  Flowlogs collector for each Frontend subnet 
- - :x: Observability instances with ability to use existing ones or deploy new ones
+ - :white_check_mark:  Logging instance with ability to use existing instance or deploy new one
  - :x: VPN server with Wireguard 
- - :x: Bastion Server 
+ - :white_check_mark:  Bastion Server 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Modules
