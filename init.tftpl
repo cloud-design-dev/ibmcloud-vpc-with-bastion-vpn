@@ -3,7 +3,8 @@
 prep_system() {
     DEBIAN_FRONTEND=noninteractive apt-get -qqy update
     DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' upgrade
-    DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install linux-headers-$(uname -r) python3-apt python3-pip curl wget unzip jq wireguard resolvconf
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install linux-headers-$(uname -r) 
+build-essential python3-pip curl wget unzip jq resolvconf
 }
 
 add_logging() {
@@ -15,7 +16,6 @@ add_logging() {
     logdna-agent -s LOGDNA_APIHOST=api.${region}.logging.cloud.ibm.com
     logdna-agent -t ${vpc_tag}
     logdna-agent -t "hostname:`hostname -s`"
-    logdna-agent -d /opt/draios/logs/
     systemctl enable --now logdna-agent
 }
 
