@@ -1,6 +1,9 @@
 locals {
-  prefix = var.project_prefix != "" ? var.project_prefix : "${random_string.prefix.0.result}-lab"
-  region = var.region != "" ? var.region : random_shuffle.region.result[0]
+  prefix       = var.project_prefix != "" ? var.project_prefix : "${random_string.prefix.0.result}-lab"
+  region       = var.region != "" ? var.region : random_shuffle.region.result[0]
+  cos_instance = var.existing_cos_instance != "" ? data.ibm_resource_instance.cos.0.id : null
+  cos_guid     = var.existing_cos_instance != "" ? data.ibm_resource_instance.cos.0.guid : substr(trim(trimprefix(module.cos.0.cos_instance_id, "crn:v1:bluemix:public:cloud-object-storage:global:a/"), "::"), 33, -1)
+  # substr(trim(trimprefix(data.ibm_resource_instance.cos[0].id, "crn:v1:bluemix:public:cloud-object-storage:global:a/"), "::"), 32, -1)
 
   tags = [
     "owner:${var.owner}",
