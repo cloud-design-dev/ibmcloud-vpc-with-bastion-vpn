@@ -26,3 +26,8 @@ output "cos_instance_guid" {
 output "cos_bucket_names" {
   value = flatten(module.fowlogs_cos_bucket.*.bucket_name)
 }
+
+output "bastion_public_ip" {
+  description = "Public IP of the bastion instance."
+  value       = ibm_is_floating_ip.bastion.address
+}

@@ -24,6 +24,36 @@ variable "existing_cos_instance" {
   default     = ""
 }
 
+variable "existing_ssh_key" {
+  description = "The name of an existing SSH key to use. If not specified, a new key will be created."
+  type        = string
+  default     = ""
+}
+
+variable "instance_profile" {
+  description = "The name of an existing instance profile to use. You can list available instance profiles with the command 'ibmcloud is instance-profiles'."
+  type        = string
+  default     = "cx2-2x4"
+}
+
+variable "image_name" {
+  description = "The name of an existing OS image to use. You can list available images with the command 'ibmcloud is images'."
+  type        = string
+  default     = "ibm-ubuntu-22-04-1-minimal-amd64-3"
+}
+
+variable "allow_ip_spoofing" {
+  description = "Allow IP spoofing on the bastion instance primary interface."
+  type        = bool
+  default     = false
+}
+
+variable "metadata_service_enabled" {
+  description = "Enable the metadata service on the bastion instance."
+  type        = bool
+  default     = true
+}
+
 variable "frontend_rules" {
   description = "A list of security group rules to be added to the Frontend security group"
   type = list(

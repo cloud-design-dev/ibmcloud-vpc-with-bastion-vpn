@@ -1,9 +1,13 @@
 # Description: Data sources for the module
 
-# # Pull resource group
-# data "ibm_resource_group" "resource_group" {
-#   name = (var.resource_group != "" ? var.resource_group : "default")
-# }
+data "ibm_is_image" "base" {
+  name = var.image_name
+}
+
+data "ibm_is_ssh_key" "sshkey" {
+  count = var.existing_ssh_key != "" ? 1 : 0
+  name  = var.existing_ssh_key
+}
 
 # Pull in the zones in the region
 data "ibm_is_zones" "regional" {
