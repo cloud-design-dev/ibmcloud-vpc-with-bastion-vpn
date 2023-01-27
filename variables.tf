@@ -24,6 +24,18 @@ variable "existing_cos_instance" {
   default     = ""
 }
 
+variable "classic_access" {
+  description = "Allow classic access to the VPC."
+  type        = bool
+  default     = false
+}
+
+variable "default_address_prefix" {
+  description = "The address prefix to use for the VPC. Default is set to auto."
+  type        = string
+  default     = "auto"
+}
+
 variable "existing_ssh_key" {
   description = "The name of an existing SSH key to use. If not specified, a new key will be created."
   type        = string
