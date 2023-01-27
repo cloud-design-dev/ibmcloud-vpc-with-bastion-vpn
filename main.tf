@@ -40,3 +40,52 @@ module "security_group" {
   resource_group_id     = data.ibm_resource_group.resource_group.id
   security_group_rules  = local.frontend_rules
 }
+
+# module "logging" {
+#   source                     = "git::https://github.com/terraform-ibm-modules/terraform-ibm-observability-instances?ref=main"
+#   enable_platform_logs       = false
+#   sysdig_provision           = false
+#   activity_tracker_provision = false
+#   region                     = local.region
+#   resource_group_id          = data.ibm_resource_group.resource_group.id
+#   logdna_instance_name = "${local.prefix}-logging-instance"
+#   logdna_tags          = local.tags
+#   logdna_plan          = "7-day"
+# }
+
+resource "ibm_resource_instance" "cos" {
+  depends_on        = [module.vpc]
+  name              = "${local.prefix}-cos-instance"
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = "global"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  tags              = local.tags
+}
+
+resource "ibm_iam_authorization_policy" "cos_flowlogs" {
+  depends_on                  = [ibm_resource_instance.cos]
+  source_service_name         = "is"
+  source_resource_type        = "flow-log-collector"
+  target_service_name         = "cloud-object-storage"
+  target_resource_instance_id = ibm_resource_instance.cos.guid
+  roles                       = ["Writer", "Reader"]
+}
+
+resource "ibm_cos_bucket" "frontend_flowlogs" {
+  depends_on           = [ibm_iam_authorization_policy.cos_flowlogs]
+  count                = length(module.vpc.subnet_ids)
+  bucket_name          = "${local.prefix}-${substr(module.vpc.subnet_ids[count.index], 1, 6)}-bucket"
+  resource_instance_id = ibm_resource_instance.cos.id
+  region_location      = local.region
+  storage_class        = "smart"
+}
+
+resource "ibm_is_flow_log" "frontend" {
+  count          = length(module.vpc.subnet_ids)
+  depends_on     = [ibm_cos_bucket.frontend_flowlogs]
+  name           = "${local.prefix}-${substr(module.vpc.subnet_ids[count.index], 1, 6)}-collector"
+  target         = module.vpc.subnet_ids[count.index]
+  active         = true
+  storage_bucket = ibm_cos_bucket.frontend_flowlogs[count.index].bucket_name
+}
