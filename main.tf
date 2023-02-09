@@ -114,7 +114,7 @@ resource "ibm_iam_authorization_policy" "cos_flowlogs" {
 module "fowlogs_cos_bucket" {
   depends_on               = [ibm_iam_authorization_policy.cos_flowlogs]
   count                    = length(module.vpc.subnet_ids)
-  source                   = "git::https://github.com/terraform-ibm-modules/terraform-ibm-cos?ref=v5.3.1"
+  source                   = "git::https://github.com/terraform-ibm-modules/terraform-ibm-cos?ref=v5.4.0"
   bucket_name              = "${local.prefix}-${substr(module.vpc.subnet_ids[count.index], 1, 6)}-bucket"
   create_cos_instance      = false
   resource_group_id        = module.resource_group.resource_group_id
