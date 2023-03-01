@@ -89,7 +89,7 @@ module "logging" {
 module "cos" {
   count                    = var.existing_cos_instance != "" ? 0 : 1
   depends_on               = [module.vpc]
-  source                   = "git::https://github.com/terraform-ibm-modules/terraform-ibm-cos?ref=v5.3.1"
+  source                   = "git::https://github.com/terraform-ibm-modules/terraform-ibm-cos?ref=v5.8.1"
   resource_group_id        = module.resource_group.resource_group_id
   region                   = local.region
   create_hmac_key          = (var.existing_cos_instance != "" ? false : true)
